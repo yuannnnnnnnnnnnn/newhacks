@@ -6,7 +6,6 @@ pygame.init()
 
 # Set up display
 WIDTH, HEIGHT = 800, 600
-NUMBERS = [str(x) for x in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Password Game")
 
@@ -60,12 +59,14 @@ while True:
                 elif 'cat' not in text:
                     label_text = 'The password must contain the word "cat"'
                     show_image = False
-                elif sum([int(x) for x in text if x in NUMBERS]) != 10:
-                    # print (sum([x for x in text if type(x) == int]))
-                    label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
+                elif 'cat' in text:
+                    label_text = 'The sum of the digits in the password must equal the number of cats'
                     show_image = True
+                elif sum([x for x in text if type(x) == int]) != 10:
+                    label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
+                    show_image = False
                 else:
-                    label_text = 'your password is purr-fect'
+                    label_text = 'success'
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]
@@ -93,3 +94,6 @@ while True:
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
+#lan's change test
+# Yuan's chagne
+##3# sdlfsldkjf

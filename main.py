@@ -1,7 +1,7 @@
 import string
 import datetime
 import os
-
+#tests
 def clear():
     os.system('cls' if os.name=='nt' else 'clear')
 

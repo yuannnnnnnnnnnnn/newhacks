@@ -48,6 +48,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
         # Handle keypresses
 
@@ -59,14 +60,12 @@ while True:
                 elif 'cat' not in text:
                     label_text = 'The password must contain the word "cat"'
                     show_image = False
-                elif 'cat' in text:
-                    label_text = 'The sum of the digits in the password must equal the number of cats'
-                    show_image = True
-                elif sum([x for x in text if type(x) == int]) != 10:
+                elif sum([int(x) for x in text if x in numbers]) != 10:
                     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
-                    show_image = False
+                    show_image = True
                 else:
                     label_text = 'success'
+                    show_image = False
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]
@@ -94,6 +93,4 @@ while True:
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
-#lan's change test
-# Yuan's chagne
-##3# sdlfsldkjf
+

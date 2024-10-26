@@ -94,13 +94,3 @@ while True:
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
-#lan's change test
-# Yuan's chagne
-##3# sdlfsldkjf
-
-
-
-
-# totoospdjfsojdp
-#dfghjkl
-#nofetch

@@ -59,15 +59,14 @@ while True:
                 elif 'cat' not in text:
                     label_text = 'The password must contain the word "cat"'
                     show_image = False
-                # elif sum([x for x in text if type(x) == int]) != 9:
-                #     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
-                #     show_image = False
-                # elif sum([x for x in text if type(x) == int]) == 9:
-                #     label_text = 'The password should start with the number of the cats one the screen'
-                #     show_image = True
-                elif text != 10:
-                    label_text = 'NOOO! That is wrong!'
+                elif 'cat' in text:
+                    label_text = 'The sum of the digits in the password must equal the number of cats'
                     show_image = True
+                elif sum([x for x in text if type(x) == int]) != 10:
+                    label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
+                    show_image = False
+                else:
+                    label_text = 'success'
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]

@@ -23,7 +23,7 @@ resized_image = pygame.transform.scale(image, (new_width, new_height))
 show_image = False
 
 # Fonts
-font = pygame.font.Font(None, 40)
+font = pygame.font.Font(None, 25)
 
 # Text input variables
 text = ""  # Stores the text that the player types
@@ -59,10 +59,15 @@ while True:
                 elif 'cat' not in text:
                     label_text = 'The password must contain the word "cat"'
                     show_image = False
-                elif sum([x for x in text if type(x) == int]) != 9:
-                    label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
+                # elif sum([x for x in text if type(x) == int]) != 9:
+                #     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
+                #     show_image = False
+                # elif sum([x for x in text if type(x) == int]) == 9:
+                #     label_text = 'The password should start with the number of the cats one the screen'
+                #     show_image = True
+                elif text != 10:
+                    label_text = 'NOOO! That is wrong!'
                     show_image = True
-                    show_image: window.blit(resized_image)
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]
@@ -90,4 +95,3 @@ while True:
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
-#test

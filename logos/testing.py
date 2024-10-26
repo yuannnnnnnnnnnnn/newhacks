@@ -4,9 +4,10 @@ import sys
 # Initialize Pygame
 pygame.init()
 from PIL import Image
+import level1
 
 # Set up display
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1000, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Password Game")
 
@@ -46,6 +47,23 @@ input_box = pygame.Rect(50, HEIGHT // 2 - 25, 500, 50)  # Rectangle for the text
 active = True  # Track whether input box is active
 label_text = 'What is your password?'
 
+show_text2 = False
+related = ['kitten', 'purr', 'meow', 'whiskers', 'claw', 'hiss']
+label2_text = 'Hint: ' + str(related)
+
+life_image = pygame.image.load("life.jpg")  # Replace with your image file
+life_image = pygame.transform.scale(life_image, (50, 50))
+
+# Set initial number of lives
+lives = 3  # Start with 3 lives
+
+# Position for lives
+life_spacing = 10  # Space between each life icon
+life_start_x = 20  # Starting x position for the first life icon
+life_y = 20  # y position for all life icons
+
+
+
 # Main game loop
 while True:
     window.fill(WHITE)
@@ -64,15 +82,20 @@ while True:
                 if len(text) < 6:  # Change the label only when typing starts
                     label_text = "The length has to be at least 6..."
                     show_image = False
-                elif 'cat' not in text:
-                    label_text = 'The password must contain the word "cat"'
+                    show_text2 = False
+                elif not any([i in text for i in level1.words_related]):
+                    label_text = 'The password must at least contain the relating words'
                     show_image = False
+                    show_text2 = True
+                    lives -= 1
                 elif sum([int(x) for x in text if x in numbers]) != 6:
                     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
                     show_image = True
+                    show_text2 = False
                 else:
                     label_text = 'success'
                     show_image = False
+                    show_text2 = False
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]
@@ -86,8 +109,13 @@ while True:
     pygame.draw.rect(window, PURPLE, input_box, 2)
 
     # Render and display the label text above the input box
-    label_surface = font.render(label_text, True, BLACK)
-    window.blit(label_surface, (input_box.x, input_box.y - 40))  # Place text in the box
+    label_surface = font.render(label_text, True, (0, 0, 0))  # Black text
+    window.blit(label_surface, (50, 250))
+
+    if show_text2:
+        label2_surface = font.render(label2_text, True, (0,0,0))
+        window.blit(label2_surface, (50, 230))
+
 
     # Render and display the typed text inside the input box
     text_surface = font.render(text, True, BLACK)
@@ -95,10 +123,13 @@ while True:
 
     if show_image:
         if frame_count > 0:
-            window.blit(gif_frames[current_frame], (600, 200))  # Adjust position as needed
+            window.blit(gif_frames[current_frame], (800, 200))  # Adjust position as needed
             current_frame = (current_frame + 1) % frame_count
+
+    for i in range(3):
+        x = life_start_x + i * (life_image.get_width() + life_spacing)
+        window.blit(life_image, (x, life_y))
 
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
-# yuan's change

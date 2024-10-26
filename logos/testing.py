@@ -103,3 +103,4 @@ while True:
 
 # totoospdjfsojdp
 #dfghjkl
+#nofetch

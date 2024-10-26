@@ -93,11 +93,6 @@ while True:
     text_surface = font.render(text, True, BLACK)
     window.blit(text_surface, (input_box.x + 10, input_box.y + 10))
 
-    # Draw the image on the screen
-    # if show_image:
-    #     window.blit(resized_image, image_rect)
-
-
     if show_image:
         if frame_count > 0:
             window.blit(gif_frames[current_frame], (600, 200))  # Adjust position as needed

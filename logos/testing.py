@@ -62,9 +62,10 @@ while True:
                     show_image = False
                 elif sum([int(x) for x in text if x in numbers]) != 10:
                     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
-                    show_image = False
+                    show_image = True
                 else:
                     label_text = 'success'
+                    show_image = False
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character
                 text = text[:-1]

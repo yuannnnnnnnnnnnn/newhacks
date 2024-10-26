@@ -84,7 +84,7 @@ while True:
                     show_image = False
                     show_text2 = False
                 elif not any([i in text for i in level1.words_related]):
-                    label_text = 'The password must at least contain the relating words'
+                    label_text = 'The password must have one of the hint words'
                     show_image = False
                     show_text2 = True
                     lives -= 1

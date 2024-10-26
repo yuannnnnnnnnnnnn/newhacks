@@ -3,6 +3,7 @@ import sys
 
 # Initialize Pygame
 pygame.init()
+from PIL import Image
 
 # Set up display
 WIDTH, HEIGHT = 800, 600
@@ -14,13 +15,27 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 PURPLE = (215, 176, 245)
 
-image = pygame.image.load("campcat10.gif")  # Replace with your image file
-image_rect = image.get_rect()
-image_rect.topleft = (600, 400)
-
-new_width, new_height = image.get_width() // 2, image.get_height() // 2
-resized_image = pygame.transform.scale(image, (new_width, new_height))
 show_image = False
+
+def load_gif_frames(gif_path, size=(100, 100)):  # Set default size to 100x100 pixels
+    with Image.open(gif_path) as img:
+        frames = []
+        try:
+            while True:
+                frame = img.copy()
+                # Resize the frame before converting to Pygame format
+                resized_frame = frame.resize(size, Image.LANCZOS)  # Use LANCZOS for high-quality resizing
+                frames.append(pygame.image.fromstring(resized_frame.tobytes(), resized_frame.size, resized_frame.mode))
+                img.seek(len(frames))  # Move to the next frame
+        except EOFError:
+            pass  # End of GIF
+    return frames
+
+gif_frames = load_gif_frames("cat-cats.gif", size=(150, 150))  # Change size as needed
+
+current_frame = 0
+frame_count = len(gif_frames)
+clock = pygame.time.Clock()  # Control frame rate
 
 # Fonts
 font = pygame.font.Font(None, 25)
@@ -30,14 +45,6 @@ text = ""  # Stores the text that the player types
 input_box = pygame.Rect(50, HEIGHT // 2 - 25, 500, 50)  # Rectangle for the text box
 active = True  # Track whether input box is active
 label_text = 'What is your password?'
-
-        # Handle mouse click
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     # If the user clicks on the input box, activate it.
-        #     if len(text) < 6:  # Change the label only when typing starts
-        #         label_text = "The length has to be at least 6..."
-        #     else:
-        #         active = False
 
 # Main game loop
 while True:
@@ -60,7 +67,7 @@ while True:
                 elif 'cat' not in text:
                     label_text = 'The password must contain the word "cat"'
                     show_image = False
-                elif sum([int(x) for x in text if x in numbers]) != 10:
+                elif sum([int(x) for x in text if x in numbers]) != 6:
                     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
                     show_image = True
                 else:
@@ -87,11 +94,15 @@ while True:
     window.blit(text_surface, (input_box.x + 10, input_box.y + 10))
 
     # Draw the image on the screen
+    # if show_image:
+    #     window.blit(resized_image, image_rect)
+
+
     if show_image:
-        window.blit(resized_image, image_rect)
+        if frame_count > 0:
+            window.blit(gif_frames[current_frame], (600, 200))  # Adjust position as needed
+            current_frame = (current_frame + 1) % frame_count
 
     # Refresh display
     pygame.display.flip()
     pygame.time.Clock().tick(30)  # Set frame rate
-#yuan's change 2.0
-#seethis?

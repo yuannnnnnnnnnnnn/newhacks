@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 from random import randint
+import database
 
 def obstacle_movement(obstacle_list):
     if obstacle_list:
@@ -33,7 +34,7 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 400
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption("Don't Leave Mike Naked")
+pygame.display.set_caption('Do Not Leave Mike Naked')
 clock = pygame.time.Clock()
 test_font = pygame.font.Font(None, 36)
 
@@ -49,7 +50,7 @@ dirt_surf = pygame.image.load('dirt.png').convert_alpha()
 dirt_surf = pygame.transform.scale(dirt_surf, (620, 85))
 dirt_rect = dirt_surf.get_rect(bottomleft = (0, 400))
 
-coin_count_surf = test_font.render(str(coins), True, 'White')
+coin_count_surf = test_font.render(str(database.coins), True, 'White')
 coin_count_rect = coin_count_surf.get_rect(topright = (530, 14))
 
 hearts_surf = pygame.image.load('heart.png').convert_alpha()
@@ -82,7 +83,8 @@ player_gravity = 0
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 900)
 
-restart_button_rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2, 100, 50)
+restart_button_rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2 - 30, 100, 50)
+menu_button_rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2 + 30, 100, 50)
 
 while True:
     for event in pygame.event.get():
@@ -158,6 +160,9 @@ while True:
                 obstacle_rect_list.clear()
                 player_rect.midbottom = (80, 320)
                 player_gravity = 0
+            else:
+                import title_page
+                title_page.title_screen()
     if game_active:
         pass
 
@@ -170,6 +175,9 @@ while True:
         restart_text = test_font.render("Restart", True, "White")
         screen.blit(restart_text, restart_text.get_rect(center=restart_button_rect.center))
 
+        pygame.draw.rect(screen, (255, 0, 0), menu_button_rect)
+        restart_text = test_font.render("Menu", True, "White")
+        screen.blit(restart_text, restart_text.get_rect(center=menu_button_rect.center))
+
     pygame.display.update()
     clock.tick(60)
- 

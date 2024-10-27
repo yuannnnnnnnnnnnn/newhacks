@@ -1,8 +1,6 @@
 # Import your game and shop modules
 import pygame
 import sys
-import game_ver3
-import wardrobe
 
 # Initialize Pygame
 pygame.init()
@@ -38,25 +36,25 @@ wardrobe_text = button_font.render("Wardrobe", True, BLACK)
 image = pygame.image.load("mike.png")  # Replace with your actual file name
 image_rect = image.get_rect(bottomright=(600, 500))  # Position the image
 
+
 def title_screen():
     while True:
         screen.fill(WHITE)
-        
+
         # Draw title and image
         screen.blit(image, image_rect)  # Display the image
         screen.blit(title_text, title_rect)
-        
+
         # Draw buttons
         pygame.draw.rect(screen, GRAY, start_button)
         pygame.draw.rect(screen, GRAY, wardrobe_button)
-        
+
         # Draw button text
         screen.blit(start_text, (start_button.x + (button_width - start_text.get_width()) // 2,
-                         start_button.y + (button_height - start_text.get_height()) // 2))
+                                 start_button.y + (button_height - start_text.get_height()) // 2))
         screen.blit(wardrobe_text, (wardrobe_button.x + (button_width - wardrobe_text.get_width()) // 2,
-                        wardrobe_button.y + (button_height - wardrobe_text.get_height()) // 2))
+                                    wardrobe_button.y + (button_height - wardrobe_text.get_height()) // 2))
 
-        
         # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -64,11 +62,17 @@ def title_screen():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos):
-                    game_ver3.start()  # Call the start function from the game module
+                    import game_ver3
+                    game_ver3.screen()  # Call the main function from the game module
+                    return  # Exit the title screen after starting the game
                 elif wardrobe_button.collidepoint(event.pos):
-                    wardrobe.enter()  # Call the enter function from the shop module
-        
+                    import wardrobe
+                    wardrobe.enter()  # Call the enter function from the wardrobe module
+                    return  # Exit the title screen after entering the wardrobe
+
         pygame.display.flip()
 
+
 # Run the title screen
-title_screen()
+if __name__ == "__main__":
+    title_screen()  # Start the title screen

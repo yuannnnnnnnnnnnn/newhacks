@@ -17,7 +17,8 @@ background_surface = pygame.transform.scale(background_surface, (WIDTH, HEIGHT))
 score_surf = test_font.render(str(coins), True, 'White')
 score_rect = score_surf.get_rect(topright = (545, 14))
 
-hearts_surf = 
+hearts_surf = pygame.image.load('heart.png').convert_alpha()
+hearts_surf = pygame.transform.scale(hearts_surf, (70, 35))
 
 coin_surf = pygame.image.load('coin.png').convert_alpha()
 coin_surf = pygame.transform.scale(coin_surf, (50, 30))
@@ -42,6 +43,9 @@ while True:
     screen.blit(background_surface, (0,0))
     screen.blit(score_surf, score_rect)
     screen.blit(coin_surf, coin_rect)
+    screen.blit(hearts_surf, (0,10))
+    screen.blit(hearts_surf, (50,10))
+    screen.blit(hearts_surf, (100,10))
     rock_rect.x -= 4
     if rock_rect.right <= 0: rock_rect.left = 600
     screen.blit(rock_surface, rock_rect)

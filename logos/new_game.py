@@ -54,41 +54,76 @@ def wrap_text(text, font, max_width):
     return lines
 
 # Run the game loop
-running = True
-while running:
-    # Draw the background image
-    screen.blit(background_image, (0, 0))
+# running = True
+# while running:
+#     # Draw the background image
+#     screen.blit(background_image, (0, 0))
+#
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
+#
+#     # Display the resized image
+#     screen.blit(resized_image, (100, 400))  # Adjust the (x, y) position as needed
+#
+#     # Update the displayed text based on the typing speed
+#     current_time = pygame.time.get_ticks()
+#     if current_time - last_update_time > typing_speed and text_index < len(full_text):
+#         displayed_text += full_text[text_index]
+#         text_index += 1
+#         last_update_time = current_time
+#
+#     # Wrap the text to fit the screen width
+#     lines = wrap_text(displayed_text, font, 800)  # Adjust padding if needed
+#
+#     # Render and display each line of text
+#     x_offset = 300
+#     y_offset = 450
+#     for line in lines:
+#         text_surface = font.render(line, True, WHITE)
+#         screen.blit(text_surface, (x_offset, y_offset))
+#         y_offset += font.get_linesize()  # Move down by one line height
+#
+#     # Update the display
+#     pygame.display.flip()
+#     clock.tick(30)
+#
+# # Quit Pygame
+# pygame.quit()
+# sys.exit()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def run_scene1():
+    global displayed_text, text_index, last_update_time
+    running = True
+    while running:
+        screen.blit(background_image, (0, 0))
 
-    # Display the resized image
-    screen.blit(resized_image, (100, 400))  # Adjust the (x, y) position as needed
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                running = False  # Press Enter to move to the next scene
 
-    # Update the displayed text based on the typing speed
-    current_time = pygame.time.get_ticks()
-    if current_time - last_update_time > typing_speed and text_index < len(full_text):
-        displayed_text += full_text[text_index]
-        text_index += 1
-        last_update_time = current_time
+        # Display the resized image
+        screen.blit(resized_image, (100, 400))
 
-    # Wrap the text to fit the screen width
-    lines = wrap_text(displayed_text, font, 800)  # Adjust padding if needed
+        # Update the displayed text based on typing speed
+        current_time = pygame.time.get_ticks()
+        if current_time - last_update_time > typing_speed and text_index < len(full_text):
+            displayed_text += full_text[text_index]
+            text_index += 1
+            last_update_time = current_time
 
-    # Render and display each line of text
-    x_offset = 300
-    y_offset = 450
-    for line in lines:
-        text_surface = font.render(line, True, WHITE)
-        screen.blit(text_surface, (x_offset, y_offset))
-        y_offset += font.get_linesize()  # Move down by one line height
+        # Wrap the text
+        lines = wrap_text(displayed_text, font, 800)
+        x_offset = 300
+        y_offset = 450
+        for line in lines:
+            text_surface = font.render(line, True, WHITE)
+            screen.blit(text_surface, (x_offset, y_offset))
+            y_offset += font.get_linesize()
 
-    # Update the display
-    pygame.display.flip()
-    clock.tick(30)
-
-# Quit Pygame
-pygame.quit()
-sys.exit()
-
+        # Update the display
+        pygame.display.flip()
+        clock.tick(30)

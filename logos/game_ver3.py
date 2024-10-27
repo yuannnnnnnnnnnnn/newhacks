@@ -16,7 +16,7 @@ text_surface = test_font.render('My game', True, 'Green')
 
 rock_surface = pygame.image.load('better_rock.png').convert_alpha()
 rock_surface = pygame.transform.scale(rock_surface, (70, 35))
-rock_x_pos = 500
+rock_rect = rock_surface.get_rect(midbottom = (500, 370))
 
 player_surf = pygame.image.load('mike.png').convert_alpha()
 player_surf = pygame.transform.scale(player_surf, (60, 100))
@@ -30,9 +30,9 @@ while True:
     
     screen.blit(background_surface, (0,0))
     screen.blit(text_surface, (230, 50))
-    rock_x_pos -= 4
-    if rock_x_pos < -100: rock_x_pos = 600
-    screen.blit(rock_surface, (rock_x_pos,320))
+    rock_rect.x -= 4
+    if rock_rect.right <= 0: rock_rect.left = 600
+    screen.blit(rock_surface, rock_rect)
     screen.blit(player_surf, player_rect)
 
     pygame.display.update()

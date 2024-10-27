@@ -1,8 +1,8 @@
 # Import your game and shop modules
 import pygame
 import sys
-# import game_ver3
-# import shop
+import game_ver3
+import wardrobe
 
 # Initialize Pygame
 pygame.init()
@@ -36,7 +36,6 @@ wardrobe_text = button_font.render("Wardrobe", True, BLACK)
 
 # Load the image
 image = pygame.image.load("mike.png")  # Replace with your actual file name
-# image = pygame.transform.scale(image, (400, 150))  # Resize if needed
 image_rect = image.get_rect(bottomright=(600, 500))  # Position the image
 
 def title_screen():
@@ -59,15 +58,15 @@ def title_screen():
 
         
         # Event handling
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         pygame.quit()
-        #         sys.exit()
-        #     elif event.type == pygame.MOUSEBUTTONDOWN:
-        #         if start_button.collidepoint(event.pos):
-        #             game_ver3.start()  # Call the start function from the game module
-        #         # elif wardrobe_button.collidepoint(event.pos):
-        #         #     shop.enter()  # Call the enter function from the shop module
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.collidepoint(event.pos):
+                    game_ver3.start()  # Call the start function from the game module
+                elif wardrobe_button.collidepoint(event.pos):
+                    wardrobe.enter()  # Call the enter function from the shop module
         
         pygame.display.flip()
 

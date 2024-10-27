@@ -1,8 +1,11 @@
 import pygame
 from sys import exit
+import database
+
 
 class Clothing:
     """Clothing object representing an item with status and price."""
+
     def __init__(self, name, category, color, x, y, width, height, image, price, cat_scale, position):
         self.name = name
         self.category = category
@@ -35,7 +38,13 @@ font = pygame.font.Font(None, 36)
 # Load background and mike image
 background_surf = pygame.image.load('blurred_background.png').convert()
 background_surf = pygame.transform.scale(background_surf, (WIDTH, HEIGHT))
+
 mike_image = pygame.image.load('mike.png').convert_alpha()
+
+button_rect = pygame.Rect(230, 340, 100, 45)  # Position (x, y) and size (width, height)
+button_color = (60, 48, 31)
+button_hover_color = (80, 80, 80)
+button_text = "BACK"
 
 # Load clothing images
 image_list = ['PMG mike jeans.png', 'PNG mike shorts.png', 'PNG mike baseball cap.png',
@@ -73,7 +82,6 @@ clothes_objects = [
 ]
 
 # Initial state
-coins = 100
 selected_clothing = None  # Store the currently selected clothing item
 equipped_clothing = {
     'pants': None,
@@ -84,7 +92,7 @@ equipped_clothing = {
 # Main loop
 while True:
     mouse_pos = pygame.mouse.get_pos()  # Get current mouse position
-    buy_button_enabled = selected_clothing and not selected_clothing.bought and coins >= selected_clothing.price
+    buy_button_enabled = selected_clothing and not selected_clothing.bought and database.coins >= selected_clothing.price
     equip_button_enabled = selected_clothing and selected_clothing.bought
 
     # Set button colors based on enabled/disabled state
@@ -104,63 +112,80 @@ while True:
 
             # Handle buy button click
             if buy_button_enabled and buy_button.collidepoint(mouse_pos):
-                coins -= selected_clothing.price
+                database.coins -= selected_clothing.price
                 selected_clothing.bought = True
 
             # Handle equip button click
             if equip_button_enabled and equip_button.collidepoint(mouse_pos):
                 equipped_clothing[selected_clothing.category] = selected_clothing.cat_image
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if button_rect.collidepoint(event.pos):
+                import title_page
+                title_page.title_screen()
 
-    # Draw background
-    screen.blit(background_surf, (0, 0))
+        mouse_pos = pygame.mouse.get_pos()  # Get current mouse position
+        # Change button color if hovered
+        current_color = button_hover_color if button_rect.collidepoint(mouse_pos) else button_color
 
-    # Draw all clothing objects, with highlight if selected
-    for clothes in clothes_objects:
-        highlight = clothes == selected_clothing  # Highlight if selected
-        clothes.draw(screen, highlight)
+        # Draw background
+        screen.blit(background_surf, (0, 0))
 
-    # Draw the cat box
-    cat_box = pygame.draw.rect(screen, (176, 135, 94), pygame.Rect(358, 20, 232, 360))
+        # Draw all clothing objects, with highlight if selected
+        for clothes in clothes_objects:
+            highlight = clothes == selected_clothing  # Highlight if selected
+            clothes.draw(screen, highlight)
 
-    # Draw Mike the cat
-    screen.blit(mike_image, (cat_box.x + 45, cat_box.y + 20))
+        # Draw the cat box
+        cat_box = pygame.draw.rect(screen, (176, 135, 94), pygame.Rect(358, 20, 232, 360))
 
-    # Draw equipped clothing on the cat
-    if equipped_clothing['pants']:
-        screen.blit(equipped_clothing['pants'], (cat_box.x + 57, cat_box.y + 150))  # Position for pants
-    if equipped_clothing['hat']:
-        screen.blit(equipped_clothing['hat'], (cat_box.x + 65, cat_box.y + -10))  # Position for hat
-    if equipped_clothing['top']:
-        screen.blit(equipped_clothing['top'], (cat_box.x + 38, cat_box.y + 72))  # Position for top
+        # Draw Mike the cat
+        screen.blit(mike_image, (cat_box.x + 45, cat_box.y + 20))
 
-    # Draw price message if a clothing item is selected
-    if selected_clothing:
-        price_text = font.render(f"IT COSTS {selected_clothing.price} COINS", True, (255, 255, 255))
-        screen.blit(price_text, (40, 300))  # Position the price text above buy and equip buttons
+        # Draw equipped clothing on the cat
+        if equipped_clothing['pants']:
+            screen.blit(equipped_clothing['pants'], (cat_box.x + 57, cat_box.y + 150))  # Position for pants
+        if equipped_clothing['hat']:
+            screen.blit(equipped_clothing['hat'], (cat_box.x + 65, cat_box.y + -10))  # Position for hat
+        if equipped_clothing['top']:
+            screen.blit(equipped_clothing['top'], (cat_box.x + 38, cat_box.y + 72))  # Position for top
 
-    # Draw Buy Button
-    buy_button = pygame.draw.rect(screen, buy_button_color, pygame.Rect(40, 256, 119, 40))
-    buy_text = font.render("Buy", True, (255, 255, 255))  # White text
-    screen.blit(buy_text, (buy_button.x + 35, buy_button.y + 6))  # Centered
+        # Draw price message if a clothing item is selected
+        if selected_clothing:
+            price_text = font.render(f"IT COSTS {selected_clothing.price} COINS", True, (255, 255, 255))
+            screen.blit(price_text, (40, 300))  # Position the price text above buy and equip buttons
 
-    # Change buy button color on hover
-    if buy_button_enabled and buy_button.collidepoint(mouse_pos):
-        pygame.draw.rect(screen, (80, 80, 80), buy_button)  # Darker shade on hover
-        screen.blit(buy_text, (buy_button.x + 35, buy_button.y + 6))
+        # Draw Buy Button
+        buy_button = pygame.draw.rect(screen, buy_button_color, pygame.Rect(40, 256, 119, 40))
+        buy_text = font.render("Buy", True, (255, 255, 255))  # White text
+        screen.blit(buy_text, (buy_button.x + 35, buy_button.y + 6))  # Centered
 
-    # Draw Equip Button
-    equip_button = pygame.draw.rect(screen, equip_button_color, pygame.Rect(189, 256, 119, 40))
-    equip_text = font.render("Equip", True, (255, 255, 255))  # White text
-    screen.blit(equip_text, (equip_button.x + 25, equip_button.y + 6))
+        # Change buy button color on hover
+        if buy_button_enabled and buy_button.collidepoint(mouse_pos):
+            pygame.draw.rect(screen, (80, 80, 80), buy_button)  # Darker shade on hover
+            screen.blit(buy_text, (buy_button.x + 35, buy_button.y + 6))
 
-    # Change equip button color on hover
-    if equip_button_enabled and equip_button.collidepoint(mouse_pos):
-        pygame.draw.rect(screen, (80, 80, 80), equip_button)  # Darker shade on hover
+        # Draw Equip Button
+        equip_button = pygame.draw.rect(screen, equip_button_color, pygame.Rect(189, 256, 119, 40))
+        equip_text = font.render("Equip", True, (255, 255, 255))  # White text
         screen.blit(equip_text, (equip_button.x + 25, equip_button.y + 6))
 
-    # Display coin count
-    coin_text = font.render(f"Coins: {coins}", True, (255, 255, 0))  # Yellow text
-    screen.blit(coin_text, (10, 350))
+        # Draw the button
+        pygame.draw.rect(screen, button_color, button_rect)
 
-    # Update the display
-    pygame.display.flip()
+        # Render button text
+        font = pygame.font.Font(None, 36)
+        text_surface = font.render(button_text, True, (255, 255, 255))  # White text
+        text_rect = text_surface.get_rect(center=button_rect.center)  # Center text on button
+        screen.blit(text_surface, text_rect)
+
+        # Change equip button color on hover
+        if equip_button_enabled and equip_button.collidepoint(mouse_pos):
+            pygame.draw.rect(screen, (80, 80, 80), equip_button)  # Darker shade on hover
+            screen.blit(equip_text, (equip_button.x + 25, equip_button.y + 6))
+
+        # Display coin count
+        coin_text = font.render(f"Coins: {database.coins}", True, (255, 255, 0))  # Yellow text
+        screen.blit(coin_text, (10, 350))
+
+        # Update the display
+        pygame.display.flip()

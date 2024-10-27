@@ -50,7 +50,7 @@ dirt_surf = pygame.transform.scale(dirt_surf, (620, 85))
 dirt_rect = dirt_surf.get_rect(bottomleft = (0, 400))
 
 coin_count_surf = test_font.render(str(coins), True, 'White')
-coin_count_rect = coin_count_surf.get_rect(topright = (545, 14))
+coin_count_rect = coin_count_surf.get_rect(topright = (530, 14))
 
 hearts_surf = pygame.image.load('heart.png').convert_alpha()
 hearts_surf = pygame.transform.scale(hearts_surf, (70, 35))
@@ -105,7 +105,7 @@ while True:
     if game_active:
         screen.blit(background_surface, (0,0))
         #screen.blit(dirt_surf, dirt_rect)
-        pygame.draw.rect(screen, (56, 60, 75), dirt_rect)
+        pygame.draw.rect(screen,(56, 60, 75), dirt_rect)
         screen.blit(coin_count_surf, coin_count_rect)
         screen.blit(corner_coin_surf, corner_coin_rect)
 

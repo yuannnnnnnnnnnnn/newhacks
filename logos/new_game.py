@@ -35,6 +35,24 @@ typing_speed = 100  # in milliseconds
 clock = pygame.time.Clock()
 last_update_time = pygame.time.get_ticks()
 
+def wrap_text(text, font, max_width):
+    """Splits text into lines that fit within a specified width."""
+    words = text.split()
+    lines = []
+    current_line = ""
+
+    for word in words:
+        # Check if adding the next word would exceed the max width
+        test_line = current_line + word + " "
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line.strip())
+            current_line = word + " "
+
+    lines.append(current_line.strip())  # Add the last line
+    return lines
+
 # Run the game loop
 running = True
 while running:
@@ -55,9 +73,16 @@ while running:
         text_index += 1
         last_update_time = current_time
 
-    # Render and display the text
-    text_surface = font.render(displayed_text, True, WHITE)
-    screen.blit(text_surface, (200, HEIGHT // 2))
+    # Wrap the text to fit the screen width
+    lines = wrap_text(displayed_text, font, 800)  # Adjust padding if needed
+
+    # Render and display each line of text
+    x_offset = 300
+    y_offset = 450
+    for line in lines:
+        text_surface = font.render(line, True, WHITE)
+        screen.blit(text_surface, (x_offset, y_offset))
+        y_offset += font.get_linesize()  # Move down by one line height
 
     # Update the display
     pygame.display.flip()

@@ -9,6 +9,9 @@ WIDTH, HEIGHT = 1000, 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Set width and height as needed
 pygame.display.set_caption("Kitty Password Dress Up")
 
+background_image = pygame.image.load("background.jpg")  # Replace with your image file
+background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
+
 # Load the image
 image = pygame.image.load("Standing_Cat.jpg")  # Replace with your image file path
 
@@ -30,12 +33,12 @@ last_update_time = pygame.time.get_ticks()
 # Run the game loop
 running = True
 while running:
+    # Draw the background image
+    screen.blit(background_image, (0, 0))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    # Fill the screen with a background color
-    screen.fill((255, 255, 255))  # White background
 
     # Display the image
     screen.blit(image, (100, 100))  # Adjust the (x, y) position as needed
@@ -48,7 +51,7 @@ while running:
         last_update_time = current_time
 
     # Render and display the text
-    text_surface = font.render(displayed_text, True, BLACK)
+    text_surface = font.render(displayed_text, True, WHITE)
     screen.blit(text_surface, (300, HEIGHT // 2))
 
     # Update the display

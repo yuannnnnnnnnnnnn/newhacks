@@ -9,7 +9,7 @@ import level1
 # Set up display
 WIDTH, HEIGHT = 1000, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Password Game")
+pygame.display.set_caption("Kitty Password Game")
 
 # Colors
 WHITE = (255, 255, 255)
@@ -45,7 +45,7 @@ font = pygame.font.Font(None, 25)
 text = ""  # Stores the text that the player types
 input_box = pygame.Rect(50, HEIGHT // 2 - 25, 500, 50)  # Rectangle for the text box
 active = True  # Track whether input box is active
-label_text = 'What is your password?'
+label_text = 'Design your kitty password?'
 
 show_text2 = False
 related = ['kitten', 'purr', 'meow', 'whiskers', 'claw', 'hiss']
@@ -74,6 +74,7 @@ while True:
             pygame.quit()
             sys.exit()
         numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        cat_breeds = ['ragdoll', 'burmilla', 'siberian', 'tonkinese']
 
         # Handle keydpresses
 
@@ -93,7 +94,7 @@ while True:
                     show_image = True
                     show_text2 = False
                 else:
-                    label_text = 'success'
+                    label_text = 'Wow! Your password is PURRFECT'
                     show_image = False
                     show_text2 = False
 

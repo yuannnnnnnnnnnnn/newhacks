@@ -1,7 +1,7 @@
+# Import your game and shop modules
 import pygame
 import sys
-# Import your game and shop modules
-# import game
+# import game_ver3
 # import shop
 
 # Initialize Pygame
@@ -18,7 +18,7 @@ BLACK = (0, 0, 0)
 GRAY = (100, 100, 100)
 
 # Fonts
-title_font = pygame.font.Font(None, 74)
+title_font = pygame.font.Font(None, 70)
 button_font = pygame.font.Font(None, 50)
 
 # Title text
@@ -65,9 +65,9 @@ def title_screen():
         #         sys.exit()
         #     elif event.type == pygame.MOUSEBUTTONDOWN:
         #         if start_button.collidepoint(event.pos):
-        #             game.start()  # Call the start function from the game module
-        #         elif shop_button.collidepoint(event.pos):
-        #             shop.enter()  # Call the enter function from the shop module
+        #             game_ver3.start()  # Call the start function from the game module
+        #         # elif wardrobe_button.collidepoint(event.pos):
+        #         #     shop.enter()  # Call the enter function from the shop module
         
         pygame.display.flip()
 

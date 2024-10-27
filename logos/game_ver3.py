@@ -18,6 +18,10 @@ rock_surface = pygame.image.load('better_rock.png').convert_alpha()
 rock_surface = pygame.transform.scale(rock_surface, (70, 35))
 rock_x_pos = 500
 
+player_surf = pygame.image.load('mike.png').convert_alpha()
+player_surf = pygame.transform.scale(player_surf, (60, 100))
+player_rect = player_surf.get_rect(midbottom = (80, 370))
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -29,6 +33,8 @@ while True:
     rock_x_pos -= 4
     if rock_x_pos < -100: rock_x_pos = 600
     screen.blit(rock_surface, (rock_x_pos,320))
+    player_rect.left
+    screen.blit(player_surf, player_rect)
 
     pygame.display.update()
     clock.tick(60)

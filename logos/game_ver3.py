@@ -33,7 +33,6 @@ while True:
     rock_x_pos -= 4
     if rock_x_pos < -100: rock_x_pos = 600
     screen.blit(rock_surface, (rock_x_pos,320))
-    player_rect.left
     screen.blit(player_surf, player_rect)
 
     pygame.display.update()

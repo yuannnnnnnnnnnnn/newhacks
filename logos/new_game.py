@@ -26,7 +26,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Text and typing variables
-full_text = "Hello! This text is appearing letter by letter in Pygame."
+full_text = "Hey! I’m Mike, I lost all my clothes. BRRRRR it’s cold outside, please help me fetch some!"
 displayed_text = ""
 text_index = 0
 typing_speed = 100  # in milliseconds
@@ -45,8 +45,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Display the image
-    screen.blit(image, (100, 100))  # Adjust the (x, y) position as needed
+    # Display the resized image
+    screen.blit(resized_image, (100, 400))  # Adjust the (x, y) position as needed
 
     # Update the displayed text based on the typing speed
     current_time = pygame.time.get_ticks()

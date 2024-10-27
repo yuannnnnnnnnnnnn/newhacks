@@ -5,15 +5,20 @@ import sys
 pygame.init()
 
 # Set up the display
-WIDTH, HEIGHT = 1000, 800
+WIDTH, HEIGHT = 1300, 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Set width and height as needed
 pygame.display.set_caption("Kitty Password Dress Up")
 
+# Load and resize the background image
 background_image = pygame.image.load("background.jpg")  # Replace with your image file
 background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
 
 # Load the image
-image = pygame.image.load("Standing_Cat.png")  # Replace with your image file path
+image = pygame.image.load("mike.png")  # Replace with your image file path
+
+# Resize the image
+new_image_width, new_image_height = 200, 250  # Set your desired width and height
+resized_image = pygame.transform.scale(image, (new_image_width, new_image_height))
 
 # Set up fonts and colors
 font = pygame.font.Font(None, 50)  # Use default font, size 36
@@ -21,7 +26,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Text and typing variables
-full_text = "Hello! Mike is cold."
+full_text = "Hello! This text is appearing letter by letter in Pygame."
 displayed_text = ""
 text_index = 0
 typing_speed = 100  # in milliseconds
@@ -41,7 +46,7 @@ while running:
             running = False
 
     # Display the image
-    screen.blit(image, (100, 450))  # Adjust the (x, y) position as needed
+    screen.blit(image, (100, 100))  # Adjust the (x, y) position as needed
 
     # Update the displayed text based on the typing speed
     current_time = pygame.time.get_ticks()
@@ -52,7 +57,7 @@ while running:
 
     # Render and display the text
     text_surface = font.render(displayed_text, True, WHITE)
-    screen.blit(text_surface, (300, HEIGHT // 2))
+    screen.blit(text_surface, (200, HEIGHT // 2))
 
     # Update the display
     pygame.display.flip()
@@ -61,3 +66,4 @@ while running:
 # Quit Pygame
 pygame.quit()
 sys.exit()
+

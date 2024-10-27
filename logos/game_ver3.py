@@ -2,12 +2,11 @@ import pygame
 from sys import exit
 
 pygame.init()
-screen = pygame.display.set_mode((800,400))
+screen = pygame.display.set_mode((600,400))
 pygame.display.set_caption('Do Not Leave Mike Naked')
 clock = pygame.time.Clock()
 
-test_surface = pygame.Surface((100,200))
-test_surface.fill('Red')
+background_surface = pygame.image.load('background.jpg')
 
 while True:
     for event in pygame.event.get():
@@ -15,7 +14,7 @@ while True:
             pygame.quit()
             exit()
     
-    screen.blit(test_surface, (200,100))
+    screen.blit(background_surface, (0,0))
 
     pygame.display.update()
     clock.tick(60)

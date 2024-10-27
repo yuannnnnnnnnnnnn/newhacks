@@ -9,12 +9,12 @@ pygame.display.set_caption('Do Not Leave Mike Naked')
 clock = pygame.time.Clock()
 test_font = pygame.font.Font(None, 50)
 
-background_surface = pygame.image.load('background.jpg')
+background_surface = pygame.image.load('background.jpg').convert()
 background_surface = pygame.transform.scale(background_surface, (WIDTH, HEIGHT))
 
 text_surface = test_font.render('My game', True, 'Green')
 
-rock_surface = pygame.image.load('better_rock.png')
+rock_surface = pygame.image.load('better_rock.png').convert_alpha()
 rock_surface = pygame.transform.scale(rock_surface, (70, 35))
 rock_x_pos = 500
 

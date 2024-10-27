@@ -82,13 +82,15 @@ player_gravity = 0
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 900)
 
+restart_button_rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2, 100, 50)
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if player_rect.collidepoint(event.pos) and player_rect.bottom >= 150: 
+            if player_rect.collidepoint(event.pos) and player_rect.bottom >= 150:
                 player_gravity = -16
 
         if event.type == pygame.KEYDOWN:
@@ -96,12 +98,12 @@ while True:
                 player_gravity = -16
 
         if event.type == obstacle_timer and game_active:
-            if randint(0, 2): 
+            if randint(0, 2):
                 obstacle_rect_list.append({'rect': rock_surface.get_rect(midbottom=(randint(800, 1200), 320)), 'hit': False})
             else:
                 obstacle_rect_list.append({'rect': snowball_surf.get_rect(midbottom=(randint(800, 1200), 220)), 'hit': False})
             pygame.time.set_timer(obstacle_timer, randint(1000, 1500))
-    
+
     if game_active:
         screen.blit(background_surface, (0,0))
         #screen.blit(dirt_surf, dirt_rect)
@@ -128,7 +130,7 @@ while True:
 
         if player_rect.colliderect(pygame.Rect(coin_x_pos, 250, coin_surf.get_width(), coin_surf.get_height())):
             coins += 1  # Increase coin count
-            coin_x_pos = 800  # Reset coin position to right side
+            coin_x_pos = 770  # Reset coin position to right side
             # Update coin count display
             coin_count_surf = test_font.render(str(coins), True, 'White')
 
@@ -144,10 +146,29 @@ while True:
         obstacle_rect_list, lives = collisions(player_rect, obstacle_rect_list, lives)
 
     else:
+        # screen.fill((239, 171, 235))
+        # obstacle_rect_list.clear()
+        # player_rect.midbottom = (80, 320)
+        # player_gravity = 0
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if restart_button_rect.collidepoint(event.pos):
+                # Reset game state
+                game_active = True
+                lives = 3
+                obstacle_rect_list.clear()
+                player_rect.midbottom = (80, 320)
+                player_gravity = 0
+    if game_active:
+        pass
+
+    else:
+        # Draw the game-over screen
         screen.fill((239, 171, 235))
-        obstacle_rect_list.clear()
-        player_rect.midbottom = (80, 320)
-        player_gravity = 0
+
+        # Draw restart button
+        pygame.draw.rect(screen, (255, 0, 0), restart_button_rect)
+        restart_text = test_font.render("Restart", True, "White")
+        screen.blit(restart_text, restart_text.get_rect(center=restart_button_rect.center))
 
     pygame.display.update()
     clock.tick(60)

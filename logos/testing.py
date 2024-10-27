@@ -7,7 +7,7 @@ pygame.init()
 # Set up display
 WIDTH, HEIGHT = 800, 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Password Game")
+pygame.display.set_caption("Kitty Password Game")
 
 # Colors
 WHITE = (255, 255, 255)
@@ -29,7 +29,7 @@ font = pygame.font.Font(None, 25)
 text = ""  # Stores the text that the player types
 input_box = pygame.Rect(50, HEIGHT // 2 - 25, 500, 50)  # Rectangle for the text box
 active = True  # Track whether input box is active
-label_text = 'What is your password?'
+label_text = 'Design your kitty password?'
 
         # Handle mouse click
         # if event.type == pygame.MOUSEBUTTONDOWN:
@@ -49,6 +49,7 @@ while True:
             pygame.quit()
             sys.exit()
         numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        cat_breeds = ['ragdoll', 'burmilla', 'siberian', 'tonkinese']
 
         # Handle keypresses
 
@@ -64,7 +65,7 @@ while True:
                     label_text = 'The sum of the digits in the password must equal the number of cats in the photo'
                     show_image = True
                 else:
-                    label_text = 'success'
+                    label_text = 'Wow! Your password is PURRFECT'
                     show_image = False
 
             elif event.key == pygame.K_BACKSPACE:  # Backspace deletes one character

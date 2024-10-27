@@ -13,15 +13,15 @@ background_image = pygame.image.load("background.jpg")  # Replace with your imag
 background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
 
 # Load the image
-image = pygame.image.load("Standing_Cat.jpg")  # Replace with your image file path
+image = pygame.image.load("Standing_Cat.png")  # Replace with your image file path
 
 # Set up fonts and colors
-font = pygame.font.Font(None, 36)  # Use default font, size 36
+font = pygame.font.Font(None, 50)  # Use default font, size 36
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Text and typing variables
-full_text = "Hello! This text is appearing letter by letter in Pygame."
+full_text = "Hello! Mike is cold."
 displayed_text = ""
 text_index = 0
 typing_speed = 100  # in milliseconds
@@ -41,7 +41,7 @@ while running:
             running = False
 
     # Display the image
-    screen.blit(image, (100, 100))  # Adjust the (x, y) position as needed
+    screen.blit(image, (100, 450))  # Adjust the (x, y) position as needed
 
     # Update the displayed text based on the typing speed
     current_time = pygame.time.get_ticks()

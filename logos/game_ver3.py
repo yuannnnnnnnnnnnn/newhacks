@@ -33,7 +33,7 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 400
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption('Do Not Leave Mike Naked')
+pygame.display.set_caption("Don't Leave Mike Naked")
 clock = pygame.time.Clock()
 test_font = pygame.font.Font(None, 36)
 
@@ -172,3 +172,4 @@ while True:
 
     pygame.display.update()
     clock.tick(60)
+ 

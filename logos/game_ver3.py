@@ -7,6 +7,7 @@ pygame.display.set_caption('Do Not Leave Mike Naked')
 clock = pygame.time.Clock()
 
 test_surface = pygame.Surface((100,200))
+test_surface.fill('Red')
 
 while True:
     for event in pygame.event.get():
